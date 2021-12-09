@@ -1,10 +1,12 @@
 import SignIn from "../../components/sign-in/Sign-in";
-import "./Signin.styles.css";
+import Signup from "../../components/sign-up/Signup";
+import "./Signin.styles.scss";
 
 const Signin = () => {
   return (
-    <div>
+    <div className="sign-in-and-sign-up">
       <SignIn />
+      <Signup />
     </div>
   );
 };
