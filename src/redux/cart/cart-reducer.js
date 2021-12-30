@@ -1,5 +1,7 @@
+import { addItemToCart } from "./cart-utils";
 const initialState = {
   cartDropdown: false,
+  cartItems: [],
 };
 
 const cartReducer = (state = initialState, action) => {
@@ -7,6 +9,12 @@ const cartReducer = (state = initialState, action) => {
     return {
       ...state,
       cartDropdown: !state.cartDropdown,
+    };
+  }
+  if (action.type === "ADD_ITEM") {
+    return {
+      ...state,
+      cartItems: addItemToCart(state.cartItems, action.payload),
     };
   }
   return initialState;
