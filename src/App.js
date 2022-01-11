@@ -7,10 +7,13 @@ import "./App.css";
 
 // info: Components and Pages Import
 import Homepage from "./pages/homepage/Homepage";
+import CheckoutPage from "./pages/checkout/Checkout";
 import Shop from "./pages/shop/Shop";
 import Signin from "./pages/signin/Signin.page";
 import Header from "./components/header/Header";
 import { onSnapshot } from "@firebase/firestore";
+import { createStructuredSelector } from "reselect";
+import { selectCurrentUser } from "./redux/user/user.selectors";
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -46,6 +49,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route path="/shop" component={Shop} />
+          <Route path="/checkout" component={CheckoutPage} />
           <Route
             exact
             path="/signin"
@@ -63,8 +67,9 @@ const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 });
 
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser,
-});
+const mapStateToProps = () =>
+  createStructuredSelector({
+    currentUser: selectCurrentUser,
+  });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
