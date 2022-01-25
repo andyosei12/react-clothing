@@ -1,18 +1,20 @@
+import cartTypes from "./carttypes";
+
 export const toggleCartDropDown = () => ({
-  type: "TOGGLE_CART_DROPDOWN",
+  type: cartTypes.TOGGLE_CART_DROPDOWN,
 });
 
 export const addItem = (item) => ({
-  type: "ADD_ITEM",
+  type: cartTypes.ADD_ITEM,
   payload: item,
 });
 
 export const removeItem = (item) => ({
-  type: "REMOVE_ITEM",
+  type: cartTypes.REMOVE_ITEM,
   payload: item,
 });
 
 export const clearlCartItem = (item) => ({
-  type: "CLEAR_CART_ITEM",
+  type: cartTypes.CLEAR_CART_ITEM,
   payload: item,
 });
