@@ -25,7 +25,6 @@ export const createUserProfile = async (user, additionalData) => {
   const userData = await getDoc(userRef);
 
   if (!userData.exists()) {
-    console.log("user does not exist");
     const { displayName, email } = user;
     const createdAt = new Date();
     try {
