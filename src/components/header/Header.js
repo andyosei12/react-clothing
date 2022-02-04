@@ -15,7 +15,6 @@ import { selectCartHidden } from "../../redux/cart/cart-selectors";
 import {
   HeaderContainer,
   LogoContainer,
-  OptionDiv,
   OptionsContainer,
   OptionNavLink,
 } from "./Header.styles";
@@ -30,7 +29,9 @@ const Header = ({ currentUser, showCart, toggleCartDropDown }) => {
         <OptionNavLink to="/shop">shop</OptionNavLink>
         <OptionNavLink to="/shop">contact</OptionNavLink>
         {currentUser ? (
-          <OptionDiv onClick={() => auth.signOut()}>Sign out</OptionDiv>
+          <OptionNavLink as="div" onClick={() => auth.signOut()}>
+            Sign out
+          </OptionNavLink>
         ) : (
           <OptionNavLink to="/signin">Sign in</OptionNavLink>
         )}
