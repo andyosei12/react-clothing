@@ -1,5 +1,12 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, getDoc, doc, setDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  getDoc,
+  doc,
+  setDoc,
+  writeBatch,
+  collection,
+} from "firebase/firestore";
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 
 const config = {
@@ -41,24 +48,33 @@ export const createUserProfile = async (user, additionalData) => {
 
   return userRef;
 };
+
+export const retrieveCollectionData = async () => {
+  const collectionRef = collection(firestore, "collections");
+  // console.log(collectionRef);
+  return collectionRef;
+};
+
+export const convertCollectionsSnapshotToMap = (collections) => {
+  const shopData = {};
+  collections.forEach((doc) => {
+    shopData[doc.data().title.toLowerCase()] = { ...doc.data(), id: doc.id };
+  });
+  return shopData;
+};
+
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  const batch = writeBatch(firestore);
+  objectsToAdd.forEach((item) => {
+    const newDocRef = doc(collection(firestore, collectionKey));
+    batch.set(newDocRef, item);
+  });
+  return await batch.commit();
+};
+
 export const firestore = getFirestore();
 export const auth = getAuth();
 export const signInWithGoogle = () => signInWithPopup(auth, provider);
-//   .then((result) => {
-//     // This gives you a Google Access Token. You can use it to access the Google API.
-//     const credential = GoogleAuthProvider.credentialFromResult(result);
-//     const token = credential.accessToken;
-//     // The signed-in user info.
-//     const user = result.user;
-//     // ...
-//   })
-//   .catch((error) => {
-//     // Handle Errors here.
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//     // The email of the user's account used.
-//     const email = error.email;
-//     // The AuthCredential type that was used.
-//     const credential = GoogleAuthProvider.credentialFromError(error);
-//     // ...
-//   });
